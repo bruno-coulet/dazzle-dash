@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# sources de données libres d’accès
+data/
+
 # C extensions
 *.so
 
