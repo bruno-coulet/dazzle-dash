@@ -15,7 +15,11 @@ Filtrer le DataFrame pour ne garder que les colonnes spécifiées
 df_filtered = df[liste de colonnes à garder]
 ```
 
-Supression de la colonne èunder-five deathsè, elle fait doublon avec 'infant death'.
+Supression de la colonne 'under-five deaths', elle fait doublon avec 'infant death'.
+
+Les observations sur la population chinoise et indienne semblent problématiques :
+Multiplication de la population chinoise par 1000
+Multiplication de la population indienne par 10
 
 ## Compréhension des données
 
