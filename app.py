@@ -71,6 +71,7 @@ class HealthDataApp:
                 placeholder='Select Countries'
             ),
             dcc.Graph(id='line-chart'),
+            html.H1("Top 10"),
             dcc.Dropdown(
                 id='top-10-dropdown',
                 options=[{'label': col, 'value': col} for col in self.df.columns if col not in ['country', 'year', 'status']],
