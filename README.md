@@ -15,6 +15,8 @@ Filtrer le DataFrame pour ne garder que les colonnes spécifiées
 df_filtered = df[liste de colonnes à garder]
 ```
 
+Supression de la colonne èunder-five deathsè, elle fait doublon avec 'infant death'.
+
 ## Compréhension des données
 
 | **Colonne**                      | **Description**                                                                                                                                        |
