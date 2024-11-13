@@ -1,5 +1,28 @@
 # dazzle-dash
 
+## Nettoyage des données
+
+Remplacer les majuscules des noms de colonnes par des minuscules :
+
+
+Retirer les espaces en début et fin des noms de colonnes :
+```python
+df.columns = df.columns.str.strip()
+```
+
+Filtrer le DataFrame pour ne garder que les colonnes spécifiées
+```python
+df_filtered = df[liste de colonnes à garder]
+```
+
+## compréhension des données
+
+percentage expenditure : argent dépensé pour la santé en une année par rapport au PIB.
+
+## Analyse multivarié
+
+Etudier la corrélation entre la moyenne de dépense de santé des pays développé et des pays en développement et l'espérance de vie de 2000 à 2015, 
+
 ## Définissez la notion de data storytelling
 
 ## Exemple.
