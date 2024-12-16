@@ -50,4 +50,4 @@ def update_graph(selected_country):
 
 # Lancer l'application Dash
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()
