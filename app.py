@@ -5,31 +5,28 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 import plotly.graph_objects as go
 
-# Dictionnaire des descriptions des colonnes
-COLUMN_DESCRIPTIONS = {
-    'life expectancy': 'L\'espérance de vie à la naissance (en années).',
-    'adult mortality': 'Le taux de mortalité des adultes exprimé pour 1000 adultes âgés de 15 à 60 ans.',
-    'infant deaths': 'Le nombre absolu de décès infantiles (moins d\'un an).',
-    'alcohol': 'La consommation d\'alcool par habitant (litres par an).',
-    'percentage expenditure': 'Le pourcentage des dépenses de santé par rapport au produit intérieur brut (PIB).',
-    'hepatitis b': 'La couverture vaccinale contre l\'hépatite B (% de la population).',
-    'measles': 'Le nombre de cas de rougeole.',
-    'bmi': 'L\'indice de masse corporelle moyen de la population.',
-    'under-five deaths': 'Le nombre absolu de décès d\'enfants de moins de 5 ans.',
-    'polio': 'La couverture vaccinale contre la poliomyélite (% de la population).',
-    'total expenditure': 'Les dépenses totales de santé par habitant (% du PIB).',
-    'diphtheria': 'La couverture vaccinale contre la diphtérie (% de la population).',
-    'hiv/aids': 'Le taux de prévalence du VIH/sida (% de la population).',
-    'gdp': 'Le produit intérieur brut (PIB) par habitant (en dollars américains).',
-    'population': 'La population totale.',
-    'thinness 1-19 years': 'Le pourcentage de maigreur chez les personnes âgées de 1 à 19 ans.',
-    'thinness 5-9 years': 'Le pourcentage de maigreur chez les enfants âgés de 5 à 9 ans.',
-    'income composition of resources': 'L\'indice de développement humain basé sur les ressources (échelle de 0 à 1).',
-    'schooling': 'Le nombre moyen d\'années de scolarité.'
-}
-
-
 class ColumnByCountryYearApp:
+    COLUMN_DESCRIPTIONS = {
+        'life expectancy': 'L\'espérance de vie à la naissance (en années).',
+        'adult mortality': 'Le taux de mortalité des adultes exprimé pour 1000 adultes âgés de 15 à 60 ans.',
+        'infant deaths': 'Le nombre absolu de décès infantiles (moins d\'un an).',
+        'alcohol': 'La consommation d\'alcool par habitant (litres par an).',
+        'percentage expenditure': 'Le pourcentage des dépenses de santé par rapport au produit intérieur brut (PIB).',
+        'hepatitis b': 'La couverture vaccinale contre l\'hépatite B (% de la population).',
+        'measles': 'Le nombre de cas de rougeole.',
+        'bmi': 'L\'indice de masse corporelle moyen de la population.',
+        'polio': 'La couverture vaccinale contre la poliomyélite (% de la population).',
+        'total expenditure': 'Les dépenses totales de santé par habitant (% du PIB).',
+        'diphtheria': 'La couverture vaccinale contre la diphtérie (% de la population).',
+        'hiv/aids': 'Le taux de prévalence du VIH/sida (% de la population).',
+        'gdp': 'Le produit intérieur brut (PIB) par habitant (en dollars américains).',
+        'population': 'La population totale.',
+        'thinness 1-19 years': 'Le pourcentage de maigreur chez les personnes âgées de 1 à 19 ans.',
+        'thinness 5-9 years': 'Le pourcentage de maigreur chez les enfants âgés de 5 à 9 ans.',
+        'income composition of resources': 'L\'indice de développement humain basé sur les ressources (eéchelle de 0 à 1).',
+        'schooling': 'Le nombre moyen d\'années de scolarité.'
+    }
+
     def __init__(self, df, column, title):
         self.df = df
         self.df_filtered = self.df[['country', 'year', column]]
@@ -38,7 +35,7 @@ class ColumnByCountryYearApp:
 
     def create_figure(self, selected_countries):
         if not selected_countries:
-            return go.Figure()  # Retourner un graphique vide si aucun pays n'est sélectionné
+            return go.Figure()
         filtered_df = self.df_filtered[self.df_filtered['country'].isin(selected_countries)]
         fig = px.line(filtered_df, x='year', y=self.column, color='country', title=self.title)
         return fig
@@ -49,12 +46,12 @@ class Top10App:
 
     def create_figure(self, selected_column, start_year, end_year):
         if not selected_column:
-            return go.Figure()  # Retourner un graphique vide si aucune colonne n'est sélectionnée
+            return go.Figure()
         filtered_df = self.df[(self.df['year'] >= start_year) & (self.df['year'] <= end_year)]
         avg_df = filtered_df.groupby('country')[selected_column].mean().reset_index()
         top_10 = avg_df.nlargest(10, selected_column)
         fig = px.bar(top_10, x='country', y=selected_column, title=f'Top 10 Countries by {selected_column.capitalize()} ({start_year}-{end_year})')
-        fig.update_yaxes(type='log')  # Mettre à jour l'échelle de l'axe des y en logarithmique
+        fig.update_yaxes(type='log')
         return fig
 
 class CorrelationApp:
@@ -63,11 +60,28 @@ class CorrelationApp:
 
     def create_figure(self, selected_columns):
         if not selected_columns:
-            return go.Figure()  # Retourner un graphique vide si aucune colonne n'est sélectionnée
+            return go.Figure(), "Veuillez sélectionner des colonnes pour afficher la matrice de corrélation."
+
         corr_df = self.df[selected_columns].corr()
         fig = px.imshow(corr_df, text_auto=True, title='Correlation Matrix')
-        return fig
-    
+
+        messages = []
+        for i, col1 in enumerate(selected_columns):
+            for j, col2 in enumerate(selected_columns):
+                if i < j:
+                    corr_value = corr_df.iloc[i, j]
+                    if abs(corr_value) < 0.3:
+                        relation = "faible ou inexistante"
+                    elif abs(corr_value) < 0.7:
+                        relation = "modérée"
+                    else:
+                        relation = "forte"
+                    direction = "positive" if corr_value > 0 else "négative"
+                    messages.append(
+                        f"La corrélation entre '{col1}' et '{col2}' est {relation} et {direction} (r = {corr_value:.2f})."
+                    )
+
+        return fig, "\n".join(messages)
 
 class DataApp:
     def __init__(self, csv_file):
@@ -81,14 +95,14 @@ class DataApp:
             html.H1("Data by Country and Year"),
             dcc.Dropdown(
                 id='data-type-dropdown',
-                options=[{'label': col, 'value': col} for col in COLUMN_DESCRIPTIONS.keys()],
+                options=[{'label': col, 'value': col} for col in ColumnByCountryYearApp.COLUMN_DESCRIPTIONS.keys()],
                 value='life expectancy',
                 placeholder='Select Data Type'
             ),
             dcc.Dropdown(
                 id='country-dropdown',
                 options=[{'label': country, 'value': country} for country in self.df['country'].unique()],
-                value=[],  # Aucun pays sélectionné par défaut
+                value=[],
                 multi=True,
                 placeholder='Select Countries'
             ),
@@ -112,11 +126,12 @@ class DataApp:
             dcc.Dropdown(
                 id='correlation-columns-dropdown',
                 options=[{'label': col, 'value': col} for col in self.df.columns if col not in ['country', 'year', 'status']],
-                value=[],  # Aucune colonne sélectionnée par défaut
+                value=[],
                 multi=True,
                 placeholder='Select Columns for Correlation'
             ),
-            dcc.Graph(id='correlation-chart')
+            dcc.Graph(id='correlation-chart'),
+            html.Div(id='correlation-description', style={'marginTop': 20})
         ])
 
     def setup_callbacks(self):
@@ -140,22 +155,24 @@ class DataApp:
             return app.create_figure(selected_column, start_year, end_year)
 
         @self.app.callback(
-            Output('correlation-chart', 'figure'),
+            [Output('correlation-chart', 'figure'),
+             Output('correlation-description', 'children')],
             [Input('correlation-columns-dropdown', 'value')]
         )
         def update_correlation(selected_columns):
             app = CorrelationApp(self.df)
-            return app.create_figure(selected_columns)
+            fig, messages = app.create_figure(selected_columns)
+            return fig, html.Div([html.P(message) for message in messages.split("\n")])
 
         @self.app.callback(
             Output('description', 'children'),
             [Input('data-type-dropdown', 'value')]
         )
         def update_description(selected_column):
-            return html.P(COLUMN_DESCRIPTIONS.get(selected_column, ''))
+            return html.P(ColumnByCountryYearApp.COLUMN_DESCRIPTIONS.get(selected_column, ''))
 
     def run(self):
-        self.app.run_server(debug=True)
+        self.app.run_server(debug=False)
 
 if __name__ == '__main__':
     data_app = DataApp('processed_data/LifeExpectancyData.csv')
