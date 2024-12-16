@@ -1,5 +1,36 @@
 # dazzle-dash
 
+## Objectif :
+Le directeur marketing souhaite avoir un
+outil permettant d’automatiser l’analyse des données en interne.
+
+Il faut développer un outil de data visualisation.
+
+Afin répondre à la problématique et de créer une preuve de
+concept, nous utilisons une source de données libre d’accès.
+
+## Data storytelling
+
+Le data storytelling est l'art de raconter une histoire à travers les données.
+
+Il s'agit de transformer des informations complexes en récits  accessibles via la visualisation de données, l'analyse et la narration.
+
+L'objectif est de donner du sens aux données brutes en les contextualisant et en les présentant de manière engageante.
+
+Il faut :
+
+- Faciliter la compréhension d'informations complexes pour un public non expert
+- Mettre en évidence des insights importants et des opportunités cachées dans les données
+- Soutenir la prise de décision basée sur les données en rendant l'information plus percutante
+
+Le data storytelling s'appuie sur trois piliers :
+1. les données
+2. leur visualisation graphique
+3. la narration qui les accompagne
+
+En combinant ces éléments de manière efficace, le data storytelling permet de communiquer des analyses de données de façon claire, convaincante et orientée vers l'action.
+
+
 ## Nettoyage des données
 
 Remplacer les majuscules des noms de colonnes par des minuscules :
@@ -51,15 +82,18 @@ Multiplication de la population indienne par 10
 
 ## Analyse multivarié
 
-Etudier la corrélation entre la moyenne de dépense de santé des pays développé et des pays en développement et l'espérance de vie de 2000 à 2015, 
+Etude de la corrélation entre la moyenne de dépense de santé des pays développé et des pays en développement et l'espérance de vie de 2000 à 2015.
 
-## Définissez la notion de data storytelling
+Selon la matrice de corrélation :
+Le pourcentage des dépenses de santé par rapport au produit intérieur brut/L'espérance de vie à la naissance (en années) = 0.38
+Les dépenses totales de santé par habitant (% du PIB)/L'espérance de vie à la naissance (en années) = 0.22
 
-## Exemple.
+Il y a donc une influence positive de l'investissement en santé sur l'esperance de vie.
+Cependant d'autres facteurs semblent plus influent :
 
-● Réalisez une veille sur l’outil et apprenez à construire une application
-Dash d’une page unique simple
-
+- Le nombre moyen d'années de scolarité : 0.75
+- L'indice de développement humain basé sur les ressources : 0.72
+- L'indice de masse corporelle moyen de la population : 0.57
 
 ## L’outil Dash
 
