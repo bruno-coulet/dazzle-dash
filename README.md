@@ -87,15 +87,21 @@ Multiplication de la population indienne par 10
 Etude de la corrélation entre la moyenne de dépense de santé des pays développé et des pays en développement et l'espérance de vie de 2000 à 2015.
 
 Selon la matrice de corrélation :
-Le pourcentage des dépenses de santé par rapport au produit intérieur brut/L'espérance de vie à la naissance (en années) = 0.38
-Les dépenses totales de santé par habitant (% du PIB)/L'espérance de vie à la naissance (en années) = 0.22
+- Le pourcentage des dépenses de santé par rapport au produit intérieur brut/L'espérance de vie à la naissance (en années)
+**r = 0.38**
+- Les dépenses totales de santé par habitant (% du PIB)/L'espérance de vie à la naissance (en années) 
+**r = 0.22**
 
 Il y a donc une influence positive de l'investissement en santé sur l'esperance de vie.
-Cependant d'autres facteurs semblent plus influent :
 
-- Le nombre moyen d'années de scolarité : 0.75
-- L'indice de développement humain basé sur les ressources : 0.72
-- L'indice de masse corporelle moyen de la population : 0.57
+**Cependant d'autres facteurs semblent plus influent :**
+
+- Le nombre moyen d'années de scolarité :
+**r = 0.75**
+- L'indice de développement humain basé sur les ressources :
+**r = 0.72**
+- L'indice de masse corporelle moyen de la population :
+**r = 0.57**
 
 ## L’outil Dash
 
