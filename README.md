@@ -1,5 +1,36 @@
 # dazzle-dash
 
+## Objectif :
+Le directeur marketing souhaite avoir un
+outil permettant d’automatiser l’analyse des données en interne.
+
+Il faut développer un outil de data visualisation.
+
+Afin répondre à la problématique et de créer une preuve de
+concept, nous utilisons une source de données libre d’accès.
+
+## Data storytelling
+
+Le data storytelling est l'art de raconter une histoire à travers les données.
+
+Il s'agit de transformer des informations complexes en récits  accessibles via la visualisation de données, l'analyse et la narration.
+
+L'objectif est de donner du sens aux données brutes en les contextualisant et en les présentant de manière engageante.
+
+Il faut :
+
+- Faciliter la compréhension d'informations complexes pour un public non expert
+- Mettre en évidence des insights importants et des opportunités cachées dans les données
+- Soutenir la prise de décision basée sur les données en rendant l'information plus percutante
+
+Le data storytelling s'appuie sur trois piliers :
+1. les données
+2. leur visualisation graphique
+3. la narration qui les accompagne
+
+En combinant ces éléments de manière efficace, le data storytelling permet de communiquer des analyses de données de façon claire, convaincante et orientée vers l'action.
+
+
 ## Nettoyage des données
 
 Remplacer les majuscules des noms de colonnes par des minuscules :
