@@ -23,7 +23,7 @@ class ColumnByCountryYearApp:
         'population': 'La population totale.',
         'thinness 1-19 years': 'Le pourcentage de maigreur chez les personnes âgées de 1 à 19 ans.',
         'thinness 5-9 years': 'Le pourcentage de maigreur chez les enfants âgés de 5 à 9 ans.',
-        'income composition of resources': 'L\'indice de développement humain basé sur les ressources (eéchelle de 0 à 1).',
+        'income composition of resources': 'L\'indice de développement humain basé sur les ressources (échelle de 0 à 1).',
         'schooling': 'Le nombre moyen d\'années de scolarité.'
     }
 
@@ -83,6 +83,18 @@ class CorrelationApp:
 
         return fig, "\n".join(messages)
 
+    def create_linear_correlation_figure(self, selected_columns):
+        if len(selected_columns) != 2:
+            return go.Figure(), "Veuillez sélectionner exactement deux colonnes pour afficher les relations linéaires."
+
+        col1, col2 = selected_columns
+        fig = px.scatter(
+            self.df, x=col1, y=col2, trendline="ols",
+            trendline_color_override="red",
+            title=f"Relation linéaire entre {col1} et {col2}"
+        )
+        return fig, f"Analyse de la relation linéaire entre '{col1}' et '{col2}'."
+
 class DataApp:
     def __init__(self, csv_file):
         self.df = pd.read_csv(csv_file)
@@ -131,7 +143,17 @@ class DataApp:
                 placeholder='Select Columns for Correlation'
             ),
             dcc.Graph(id='correlation-chart'),
-            html.Div(id='correlation-description', style={'marginTop': 20})
+            html.Div(id='correlation-description', style={'marginTop': 20}),
+            html.H1("Linear Correlation"),
+            dcc.Dropdown(
+                id='linear-correlation-columns-dropdown',
+                options=[{'label': col, 'value': col} for col in self.df.columns if col not in ['country', 'year', 'status']],
+                value=[],
+                multi=True,
+                placeholder='Select Exactly Two Columns'
+            ),
+            dcc.Graph(id='linear-correlation-chart'),
+            html.Div(id='linear-correlation-description', style={'marginTop': 20})
         ])
 
     def setup_callbacks(self):
@@ -163,6 +185,16 @@ class DataApp:
             app = CorrelationApp(self.df)
             fig, messages = app.create_figure(selected_columns)
             return fig, html.Div([html.P(message) for message in messages.split("\n")])
+
+        @self.app.callback(
+            [Output('linear-correlation-chart', 'figure'),
+             Output('linear-correlation-description', 'children')],
+            [Input('linear-correlation-columns-dropdown', 'value')]
+        )
+        def update_linear_correlation(selected_columns):
+            app = CorrelationApp(self.df)
+            fig, message = app.create_linear_correlation_figure(selected_columns)
+            return fig, html.Div([html.P(message)])
 
         @self.app.callback(
             Output('description', 'children'),
