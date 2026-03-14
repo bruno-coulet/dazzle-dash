@@ -204,7 +204,7 @@ class DataApp:
             return html.P(ColumnByCountryYearApp.COLUMN_DESCRIPTIONS.get(selected_column, ''))
 
     def run(self):
-        self.app.run_server(debug=False)
+        self.app.run(debug=False)
 
 if __name__ == '__main__':
     data_app = DataApp('processed_data/LifeExpectancyData.csv')

@@ -33,12 +33,9 @@ En combinant ces éléments de manière efficace, le data storytelling permet de
 
 ## Nettoyage des données
 
-Remplacer les majuscules des noms de colonnes par des minuscules :
-
-
-Retirer les espaces en début et fin des noms de colonnes :
+Remplacer les majuscules par des minuscules et retirer les espaces en début et fin des noms de colonnes :
 ```python
-df.columns = df.columns.str.strip()
+df.columns = df.columns.str.lower().str.strip()
 ```
 
 Filtrer le DataFrame pour ne garder que les colonnes spécifiées
@@ -105,17 +102,25 @@ Il y a donc une influence positive de l'investissement en santé sur l'esperance
 
 ## L’outil Dash
 
+Pour lancer l'application Dash en local, placez-vous à la racine du projet puis exécutez :
 
 ```bash
-pip install dash
+uv run app.py
 ```
+
+`uv` installe automatiquement les dépendances (`dash`, `pandas`, `plotly`, `statsmodels`) et lance le script dans un environnement isolé. Si `uv` n'est pas encore installé :
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+L'application démarre ensuite sur l'URL affichée dans le terminal (généralement http://127.0.0.1:8050). Vérifiez également que le fichier `processed_data/LifeExpectancyData.csv` est bien présent, car il est chargé au démarrage.
 **module dcc** (Dash Core Components).
 Ce module inclus dcc.Graph, permet de rendre des graphs interactifs.
 
-**Librairie plotly.express**
-permet de dessiner des graphs interactifs et de l'attribuer à la figure du dcc.Graph
+**Librairie plotly.express**<br>
+Permet de dessiner des graphs interactifs et de l'attribuer à la figure du dcc.Graph
 
-Using the plotly.express library, we build the histogram chart and assign it to the figure property of the dcc.Graph. This displays the histogram in our app.
 
 **dcc.RadioItems**
 radio buttons component

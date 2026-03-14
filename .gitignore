@@ -7,10 +7,16 @@ __pycache__/
 raw_data/
 processed_data/
 
+
+# macOS
+.DS_Store
+
+
 # C extensions
 *.so
 
 # Distribution / packaging
+.python-version
 .Python
 build/
 develop-eggs/
